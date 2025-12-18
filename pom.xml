@@ -50,13 +50,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Swagger / OpenAPI (Spring Boot 3 compatible) -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.5.0</version>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
