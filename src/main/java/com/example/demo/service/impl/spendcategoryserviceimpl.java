@@ -1,21 +1,20 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.SpendCategory;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.SpendCategoryRepository;
 import com.example.demo.service.SpendCategoryService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class SpendCategoryServiceImpl implements SpendCategoryService {
 
-    private final SpendCategoryRepository repo;
-
-    public SpendCategoryServiceImpl(SpendCategoryRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    SpendCategoryRepository repo;
 
     @Override
     public SpendCategory createCategory(SpendCategory category) {
@@ -24,8 +23,7 @@ public class SpendCategoryServiceImpl implements SpendCategoryService {
 
     @Override
     public SpendCategory updateCategory(Long id, SpendCategory category) {
-        SpendCategory existing = getCategoryById(id);
-        category.setId(existing.getId());
+        category.setId(id);
         return repo.save(category);
     }
 

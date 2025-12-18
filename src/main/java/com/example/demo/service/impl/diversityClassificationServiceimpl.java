@@ -1,21 +1,21 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.DiversityClassification;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.DiversityClassificationRepository;
 import com.example.demo.service.DiversityClassificationService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
-public class DiversityClassificationServiceImpl implements DiversityClassificationService {
+public class DiversityClassificationServiceImpl
+        implements DiversityClassificationService {
 
-    private final DiversityClassificationRepository repo;
-
-    public DiversityClassificationServiceImpl(DiversityClassificationRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    DiversityClassificationRepository repo;
 
     @Override
     public DiversityClassification createClassification(DiversityClassification c) {
@@ -24,8 +24,7 @@ public class DiversityClassificationServiceImpl implements DiversityClassificati
 
     @Override
     public DiversityClassification updateClassification(Long id, DiversityClassification c) {
-        DiversityClassification existing = getById(id);
-        c.setId(existing.getId());
+        c.setId(id);
         return repo.save(c);
     }
 
