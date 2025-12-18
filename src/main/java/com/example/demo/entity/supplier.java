@@ -1,33 +1,19 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
-@Table(
-    name = "suppliers",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name"),
-        @UniqueConstraint(columnNames = "email"),
-        @UniqueConstraint(columnNames = "registration_number")
-    }
-)
 public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String name;
-
-    @Column(name = "registration_number", unique = true)
     private String registrationNumber;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
     private String phone;
     private String address;
 
@@ -39,41 +25,23 @@ public class Supplier {
     )
     private List<DiversityClassification> diversityClassifications;
 
-    @Column(nullable = false)
     private Boolean isActive = true;
-
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-  
     public Supplier() {}
 
-    public Supplier(Long id, String name, String registrationNumber, String email, String phone,
-                    String address, List<DiversityClassification> diversityClassifications,
-                    Boolean isActive, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.registrationNumber = registrationNumber;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.diversityClassifications = diversityClassifications;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
     @PrePersist
-    public void prePersist() {
-        this.createdAt = new Timestamp(System.currentTimeMillis());
+    public void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
     }
 
     @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = new Timestamp(System.currentTimeMillis());
+    public void onUpdate() {
+        updatedAt = new Timestamp(System.currentTimeMillis());
     }
 
-  
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -101,7 +69,4 @@ public class Supplier {
 
     public Boolean getIsActive() { return isActive; }
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }
-
-    public Timestamp getCreatedAt() { return createdAt; }
-    public Timestamp getUpdatedAt() { return updatedAt; }
 }
