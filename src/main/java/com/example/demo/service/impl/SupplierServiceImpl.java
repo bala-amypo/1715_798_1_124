@@ -10,11 +10,11 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.SupplierRepository;
 import com.example.demo.service.SupplierService;
 
-@Service
+@Service   // ✅ REQUIRED
 public class SupplierServiceImpl implements SupplierService {
 
     @Autowired
-    SupplierRepository repo;
+    private SupplierRepository repo;
 
     @Override
     public Supplier createSupplier(Supplier supplier) {
@@ -30,7 +30,8 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public Supplier getSupplierById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Supplier not found with id " + id));
     }
 
     @Override
@@ -40,8 +41,10 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void deactivateSupplier(Long id) {
-        Supplier s = getSupplierById(id);
-        s.setIsActive(false);
-        repo.save(s);
+        Supplier supplier = repo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Supplier not found with id " + id));
+        supplier.setIsActive(false);
+        repo.save(supplier);
     }
 }
