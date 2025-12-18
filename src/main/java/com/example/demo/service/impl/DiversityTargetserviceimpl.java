@@ -1,21 +1,21 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.DiversityTarget;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.DiversityTargetRepository;
 import com.example.demo.service.DiversityTargetService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class DiversityTargetServiceImpl implements DiversityTargetService {
 
-    private final DiversityTargetRepository repo;
-
-    public DiversityTargetServiceImpl(DiversityTargetRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    DiversityTargetRepository repo;
 
     @Override
     public DiversityTarget createTarget(DiversityTarget target) {
@@ -24,9 +24,7 @@ public class DiversityTargetServiceImpl implements DiversityTargetService {
 
     @Override
     public DiversityTarget updateTarget(Long id, DiversityTarget target) {
-        DiversityTarget existing = repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Target not found"));
-        target.setId(existing.getId());
+        target.setId(id);
         return repo.save(target);
     }
 
@@ -35,7 +33,7 @@ public class DiversityTargetServiceImpl implements DiversityTargetService {
         return repo.findAll()
                 .stream()
                 .filter(t -> year.equals(t.getTargetYear()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -45,9 +43,9 @@ public class DiversityTargetServiceImpl implements DiversityTargetService {
 
     @Override
     public void deactivateTarget(Long id) {
-        DiversityTarget target = repo.findById(id)
+        DiversityTarget t = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Target not found"));
-        target.setActive(false);
-        repo.save(target);
+        t.setActive(false);
+        repo.save(t);
     }
 }
