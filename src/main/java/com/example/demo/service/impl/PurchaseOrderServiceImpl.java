@@ -20,7 +20,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public PurchaseOrder createPurchaseOrder(PurchaseOrder po) {
-        if (po.getAmount() == null || po.getAmount().doubleValue() <= 0) {
+        if (p4o.getAmount() == null || po.getAmount().doubleValue() <= 0) {
             throw new BadRequestException("Amount must be greater than 0");
         }
         return repo.save(po);
