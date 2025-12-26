@@ -1,17 +1,12 @@
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.entity.DiversityClassification;
+import java.util.List;
 
 public interface DiversityClassificationService {
-
-    DiversityClassification createClassification(DiversityClassification c);
-
-    DiversityClassification updateClassification(Long id, DiversityClassification c);
-
+    DiversityClassification createClassification(DiversityClassification classification);
+    DiversityClassification updateClassification(Long id, DiversityClassification classification);
+    DiversityClassification getClassificationById(Long id);
     List<DiversityClassification> getAllClassifications();
-
-    DiversityClassification getById(Long id);
-
-    void deactivateClassification(Long id);
+    DiversityClassification deactivateClassification(Long id);
 }
