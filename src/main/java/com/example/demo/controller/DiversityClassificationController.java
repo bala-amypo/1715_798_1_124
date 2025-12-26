@@ -1,45 +1,42 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.entity.DiversityClassification;
 import com.example.demo.service.DiversityClassificationService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/classifications")
 public class DiversityClassificationController {
-
-    @Autowired
-    DiversityClassificationService service;
-
-    @PostMapping("/")
-    public DiversityClassification create(@RequestBody DiversityClassification c) {
-        return service.createClassification(c);
+    private final DiversityClassificationService service;
+    
+    public DiversityClassificationController(DiversityClassificationService service) {
+        this.service = service;
     }
-
+    
+    @PostMapping
+    public ResponseEntity<DiversityClassification> createClassification(@RequestBody DiversityClassification classification) {
+        return ResponseEntity.ok(service.createClassification(classification));
+    }
+    
     @PutMapping("/{id}")
-    public DiversityClassification update(@PathVariable Long id,
-                                          @RequestBody DiversityClassification c) {
-        return service.updateClassification(id, c);
+    public ResponseEntity<DiversityClassification> updateClassification(@PathVariable Long id, @RequestBody DiversityClassification classification) {
+        return ResponseEntity.ok(service.updateClassification(id, classification));
     }
-
+    
     @GetMapping("/{id}")
-    public DiversityClassification get(@PathVariable Long id) {
-        return service.getById(id);
+    public ResponseEntity<DiversityClassification> getClassificationById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getClassificationById(id));
     }
-
-    @GetMapping("/")
-    public List<DiversityClassification> getAll() {
-        return service.getAllClassifications();
+    
+    @GetMapping
+    public ResponseEntity<List<DiversityClassification>> getAllClassifications() {
+        return ResponseEntity.ok(service.getAllClassifications());
     }
-
+    
     @PutMapping("/{id}/deactivate")
-    public String deactivate(@PathVariable Long id) {
-        service.deactivateClassification(id);
-        return "Classification deactivated";
+    public ResponseEntity<DiversityClassification> deactivateClassification(@PathVariable Long id) {
+        return ResponseEntity.ok(service.deactivateClassification(id));
     }
 }
