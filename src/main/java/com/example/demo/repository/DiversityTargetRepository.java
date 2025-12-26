@@ -1,11 +1,12 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.example.demo.entity.DiversityTarget;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
+import java.util.Optional;
+
 public interface DiversityTargetRepository
         extends JpaRepository<DiversityTarget, Long> {
+
+    Optional<DiversityTarget> findByTargetYear(int targetYear);
 }
