@@ -1,22 +1,22 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.entity.PurchaseOrder;
 import com.example.demo.service.PurchaseOrderService;
+import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/purchase-orders")
 public class PurchaseOrderController {
 
-    @Autowired
-    PurchaseOrderService service;
+    private final PurchaseOrderService service;
 
-    @PostMapping("/")
+    public PurchaseOrderController(PurchaseOrderService service) {
+        this.service = service;
+    }
+
+    @PostMapping
     public PurchaseOrder create(@RequestBody PurchaseOrder po) {
         return service.createPurchaseOrder(po);
     }
@@ -28,17 +28,12 @@ public class PurchaseOrderController {
     }
 
     @GetMapping("/{id}")
-    public PurchaseOrder get(@PathVariable Long id) {
+    public PurchaseOrder getById(@PathVariable Long id) {
         return service.getPurchaseOrderById(id);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<PurchaseOrder> getAll() {
         return service.getAllPurchaseOrders();
-    }
-
-    @GetMapping("/supplier/{supplierId}")
-    public List<PurchaseOrder> getBySupplier(@PathVariable Long supplierId) {
-        return service.getPurchaseOrdersBySupplier(supplierId);
     }
 }
