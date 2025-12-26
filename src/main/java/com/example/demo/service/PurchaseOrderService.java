@@ -1,17 +1,14 @@
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.entity.PurchaseOrder;
+import java.util.List;
 
 public interface PurchaseOrderService {
 
-    PurchaseOrder createPurchaseOrder(PurchaseOrder po);
+    PurchaseOrder create(PurchaseOrder po);
 
-    PurchaseOrder updatePurchaseOrder(Long id, PurchaseOrder po);
+    List<PurchaseOrder> getAll();
 
-    PurchaseOrder getPurchaseOrderById(Long id);
-
-    List<PurchaseOrder> getAllPurchaseOrders();
-
+    // 🔴 THIS METHOD MUST BE IMPLEMENTED
     List<PurchaseOrder> getPurchaseOrdersBySupplier(Long supplierId);
 }

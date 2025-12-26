@@ -10,10 +10,9 @@ import java.util.List;
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
-    // ✅ DECLARED
     private final PurchaseOrderRepository p4o;
 
-    // ✅ CONSTRUCTOR INJECTION
+    // ✅ Constructor injection
     public PurchaseOrderServiceImpl(PurchaseOrderRepository p4o) {
         this.p4o = p4o;
     }
@@ -26,5 +25,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public List<PurchaseOrder> getAll() {
         return p4o.findAll();
+    }
+
+    // ✅ MISSING METHOD — NOW IMPLEMENTED
+    @Override
+    public List<PurchaseOrder> getPurchaseOrdersBySupplier(Long supplierId) {
+        return p4o.findBySupplierId(supplierId);
     }
 }

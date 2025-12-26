@@ -1,11 +1,12 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.example.demo.entity.PurchaseOrder;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
+import java.util.List;
+
 public interface PurchaseOrderRepository
         extends JpaRepository<PurchaseOrder, Long> {
+
+    List<PurchaseOrder> findBySupplierId(Long supplierId);
 }
