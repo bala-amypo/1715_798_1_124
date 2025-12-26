@@ -23,9 +23,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public PurchaseOrder updatePurchaseOrder(Long id, PurchaseOrder po) {
-        PurchaseOrder existing =
-                p4o.findById(id)
-                   .orElseThrow(() -> new RuntimeException("PurchaseOrder not found"));
+        PurchaseOrder existing = p4o.findById(id)
+                .orElseThrow(() -> new RuntimeException("PurchaseOrder not found"));
 
         existing.setAmount(po.getAmount());
         existing.setOrderDate(po.getOrderDate());
@@ -37,7 +36,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public PurchaseOrder getPurchaseOrderById(Long id) {
         return p4o.findById(id)
-                  .orElseThrow(() -> new RuntimeException("PurchaseOrder not found"));
+                .orElseThrow(() -> new RuntimeException("PurchaseOrder not found"));
     }
 
     @Override

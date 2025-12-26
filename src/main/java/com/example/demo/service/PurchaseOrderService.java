@@ -5,10 +5,13 @@ import java.util.List;
 
 public interface PurchaseOrderService {
 
-    PurchaseOrder create(PurchaseOrder po);
+    PurchaseOrder createPurchaseOrder(PurchaseOrder po);
 
-    List<PurchaseOrder> getAll();
+    PurchaseOrder updatePurchaseOrder(Long id, PurchaseOrder po);
 
-    // 🔴 THIS METHOD MUST BE IMPLEMENTED
+    PurchaseOrder getPurchaseOrderById(Long id);
+
+    List<PurchaseOrder> getAllPurchaseOrders();
+
     List<PurchaseOrder> getPurchaseOrdersBySupplier(Long supplierId);
 }

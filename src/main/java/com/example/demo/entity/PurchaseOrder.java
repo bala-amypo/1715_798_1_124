@@ -1,8 +1,8 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import jakarta.persistence.*;
 
 @Entity
 public class PurchaseOrder {
@@ -11,42 +11,39 @@ public class PurchaseOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String poNumber;
-
-    @ManyToOne
-    private Supplier supplier;
-
-    @ManyToOne
-    private SpendCategory category;
+    private Long supplierId;
 
     private BigDecimal amount;
-    private LocalDate dateIssued;
-    private String approvedBy;
-    private String notes;
+
+    private LocalDate orderDate;
 
     public PurchaseOrder() {}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getPoNumber() { return poNumber; }
-    public void setPoNumber(String poNumber) { this.poNumber = poNumber; }
+    public Long getSupplierId() {
+        return supplierId;
+    }
 
-    public Supplier getSupplier() { return supplier; }
-    public void setSupplier(Supplier supplier) { this.supplier = supplier; }
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
+    }
 
-    public SpendCategory getCategory() { return category; }
-    public void setCategory(SpendCategory category) { this.category = category; }
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-    public BigDecimal getAmount() { return amount; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
-    public LocalDate getDateIssued() { return dateIssued; }
-    public void setDateIssued(LocalDate dateIssued) { this.dateIssued = dateIssued; }
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
 
-    public String getApprovedBy() { return approvedBy; }
-    public void setApprovedBy(String approvedBy) { this.approvedBy = approvedBy; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
 }
