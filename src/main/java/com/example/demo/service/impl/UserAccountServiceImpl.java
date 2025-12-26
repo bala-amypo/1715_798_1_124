@@ -1,32 +1,39 @@
 package com.example.demo.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.UserAccount;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Service
-public class UserAccountServiceImpl implements UserAccountService {
+public class UserAccountServiceImpl
+        implements UserAccountService {
 
-    @Autowired
-    UserAccountRepository repo;
+    private final UserAccountRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserAccount register(UserAccount user) {
-        // mock encoding rule
-        user.setPassword(user.getPassword() + "_ENC");
-        return repo.save(user);
+    // ✅ REQUIRED constructor (test expects BOTH params)
+    public UserAccountServiceImpl(
+            UserAccountRepository repository,
+            PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserAccount findByEmailOrThrow(String email) {
-        return repo.findAll()
-                .stream()
-                .filter(u -> email.equals(u.getEmail()))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    public UserAccount register(UserAccount user) {
+        user.setPassword(
+                passwordEncoder.encode(user.getPassword()));
+        return repository.save(user);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    @Override
+    public UserAccount findByEmail(String email) {
+        return repository.findByEmail(email)
+                .orElse(null);
     }
 }
